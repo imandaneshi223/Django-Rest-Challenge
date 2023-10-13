@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice list</title>
+    <link rel="stylesheet" href="{% static 'custom/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <div style="padding:10px;">
+        <form action="." method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Filter">
+        </form>
+
+    </div>
+    <div>
+        <p>
+            Displaying invoices from {{from_date}} to {{to_date}}. Total number of records : {{records_count}}
+        </p>
+    </div>
+    <div class="table">
+        <div class="table-header">
+            <div class="header__item"><a id="name" class="filter__link" href="#">Due date</a></div>
+            <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Partner name</a>
+            </div>
+            <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">number</a></div>
+            <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">Total amount</a>
+            </div>
+            <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Currency</a>
+            </div>
+        </div>
+        <div class="table-content">
+            {% for record in records %}
+            <div class="table-row">
+                <div class="table-data">{{record.date_invoice}}</div>
+                <div class="table-data">{{record.partner_name}}</div>
+                <div class="table-data">{{record.number}}</div>
+                <div class="table-data">{{record.amount_residual_company_currency}}</div>
+                <div class="table-data">{{record.currency}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
